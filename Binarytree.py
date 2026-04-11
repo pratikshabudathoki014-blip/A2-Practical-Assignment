@@ -24,7 +24,12 @@ class BinaryTree:
             else:
                 self._insert(current.left, value)
         else:
-            self._insert(current.right, value)
+            if current.right is None:
+                current.right = Node(value)
+            else:
+                self._insert(current.right, value)
+
+
     def search (self, value):
         return self._search (self.root, value)
     def _search(self, current, value):
@@ -35,13 +40,11 @@ class BinaryTree:
         elif value < current.value:
             return self._search(current.left, value)
         else:
-            return self._search (current.left, value)
+            return self._search (current.right, value)
 
     def inorder(self):
         return self._inorder(self.root)
 
-    def _inorder(self):
-        return self._inorder(self.root)
     def _inorder (self, current):
         if current is None:
             return []
@@ -49,8 +52,14 @@ class BinaryTree:
         return self._inorder (current.left) + [current.value] + self._inorder(current.right)
 
     def preorder(self):
-        return self._postorder (self.root)
+        return self._preorder (self.root)
+    def _preorder(self, current):
+        if current is None:
+            return []
+        return [current.value] + self._preorder(current.left)+ self._preorder(current.right)
 
+    def postorder(self):
+        return self._postorder(self.root)
     def _postorder(self, current):
         if current is None:
             return []
@@ -75,7 +84,7 @@ class BinaryTree:
             elif current.right is None:
                 return current.left
 
-            min_node = self._find_min(current,right)
+            min_node = self._find_min(current.right)
             current.value = min_node. value
             current.right = self._delete(current.right, min_node.value)
         return current
@@ -85,17 +94,26 @@ class BinaryTree:
             node = node.left
         return node
 
+
+
 def main():
     tree= BinaryTree()
     values = [50,30,70,20,40,60,80]
     for v in values:
         tree.insert (v)
 
-    print("Inorder:", tree.inorder())
-    print("Preorder:", tree.preorder())
-    print("Postorder:", tree.postorder())
+    tree.delete(20)
+    tree.delete(30)
+    tree.delete(50)
 
-    print("Search 40:", tree.search(40))
+
+    print("Inorder:", tree.inorder())
+
+
+
+if __name__ == "__main__":
+    main()
+
 
 
 
