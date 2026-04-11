@@ -1,4 +1,5 @@
 from os.path import curdir
+from unittest.mock import right
 
 
 class Node:
@@ -61,6 +62,53 @@ class BinaryTree:
     def _delete(self, current, value):
         if current is None:
             return current
+        if value < current.value:
+            current.left = self._delete (current.left, value)
+        elif value > current.value:
+            current.right = self._delete(current.right, value)
+        else:
+            if current.left is None and current.right is None:
+                return None
+
+            elif current.left is None:
+                return current.right
+            elif current.right is None:
+                return current.left
+
+            min_node = self._find_min(current,right)
+            current.value = min_node. value
+            current.right = self._delete(current.right, min_node.value)
+        return current
+
+    def _find_min(self, node):
+        while node.left:
+            node = node.left
+        return node
+
+def main():
+    tree= BinaryTree()
+    values = [50,30,70,20,40,60,80]
+    for v in values:
+        tree.insert (v)
+
+    print("Inorder:", tree.inorder())
+    print("Preorder:", tree.preorder())
+    print("Postorder:", tree.postorder())
+
+    print("Search 40:", tree.search(40))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
