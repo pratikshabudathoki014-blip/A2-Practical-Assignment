@@ -104,6 +104,7 @@ def main():
 
     tree.delete(20)
     tree.delete(30)
+    tree.delete(40)
     tree.delete(50)
 
 
